@@ -1,0 +1,114 @@
+
+
+<div ng-controller="MainCtrl">
+  <uib-tabset active="active">
+  <uib-tab index="0" heading="Booking request">
+      <div class="row">
+        <div class="col-md-3">
+            <p>Start of working day:</p>
+            <div uib-timepicker ng-model="startWorkingDay" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="false"></div>
+        </div>
+        <div class="col-md-3">
+            <p>End of working day:</p>
+            <div uib-timepicker ng-model="endWorkingDay" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="false"></div>
+        </div>
+      </div>
+    <div ng-repeat="request in requests" ng-class-odd="'odd'" ng-class-even="'even'">
+      <div class="row">
+        <div class="col-md-4 no-padding">
+          <div class="col-md-6 p-t-30">
+              <p>Submission date</p>
+              <div class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="request.submissionDate.value" is-open="requests[$index].submissionDate.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="request.submissionDate.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </div>
+          </div>
+          <div class="col-md-6">
+            <p>Submission time:</p>
+            <div uib-timepicker ng-model="request.submissionTime.value" show-seconds="true" hour-step="1" minute-step="5" show-meridian="false"></div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="col-md-6 p-t-30">
+              <p>Requested date</p>
+              <div class="input-group">
+                <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="request.requestedDate.value" is-open="request.requestedDate.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="request.requestedDate.open()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+              </div>
+          </div>
+          <div class="col-md-6">
+            <p>Requested time:</p>
+            <div uib-timepicker ng-model="request.requestedTime.value" hour-step="1" minute-step="5"  show-meridian="false"></div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="">
+            <p>duration<p>
+              <input type="text" ng-model = "request.duration">
+          </div>
+          <div class="">
+            <p>Requester</p>
+            <input type="text" ng-model = "request.requester">
+          </div>
+        </div>
+        <div class="col-md-2 p-t-30">
+          <button ng-click = "removeRequest($index)">Delete row</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <button ng-click = "addRequest()">Add</button>
+      </div>
+      <div class="col-md-2">
+        <button ng-click = "sendRequest()">Send batch request</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class ="col-md-12">
+        <h3>{{status}}</h3>
+      </div>
+    </div>
+  </uib-tab>
+  <uib-tab index="1" heading="Booking calendar">
+    <div class="container">
+      <div class = "row" ng-repeat = "day in calendar">
+        <div class="col-md-12">
+          <h2>{{day.acceptedDay}}</h2>
+          <div class ="row">
+            <div class="col-md-3">
+              <h3>Requester</h3>
+            </div>
+            <div class="col-md-3">
+              <h3>Start time</h3>
+            </div>
+            <div class="col-md-3">
+              <h3>End time</h3>
+            </div>
+          </div>
+          <div class ="row" ng-repeat="accepted in day.bookingAcceptedList">
+            <div class="col-md-3">
+              <p>{{accepted.requester}} </p>
+            </div>
+            <div class="col-md-3">
+              <p>{{accepted.startDateTime}}</p>
+            </div>
+            <div class="col-md-3">
+              <p>{{accepted.endDateTime}}</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </uib-tab>
+  </uib-tabset>
+</div>
+
+
+
